@@ -39,18 +39,6 @@ const commentController = {
       .catch(err => res.json(err));
   },
 
-  // remove reply
-  removeReply({ params }, res) {
-    Comment.findOneAndUpdate(
-      { _id: params.commentId },
-      { $pull: { replies: { replyId: params.replyId } } },
-      { new: true }
-    )
-      .then(dbPizzaData => res.json(dbPizzaData))
-      .catch(err => res.json(err));
-  },
-
-
   // remove comment
   removeComment({ params }, res) {
     Comment.findOneAndDelete({ _id: params.commentId })
@@ -72,7 +60,19 @@ const commentController = {
         res.json(dbPizzaData);
       })
       .catch(err => res.json(err));
-  }
+  },
+
+  // remove reply
+  removeReply({ params }, res) {
+    Comment.findOneAndUpdate(
+      { _id: params.commentId },
+      { $pull: { replies: { replyId: params.replyId } } },
+      { new: true }
+    )
+      .then(dbPizzaData => res.json(dbPizzaData))
+      .catch(err => res.json(err));
+  },
+  
 }
 
 module.exports = commentController;
